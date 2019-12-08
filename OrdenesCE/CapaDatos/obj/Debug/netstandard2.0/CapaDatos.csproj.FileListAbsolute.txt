@@ -1,0 +1,4 @@
+C:\Users\Chantal Morales\Documents\4to\Técnicas de Análisis\proyecto\OrdenesCE\CapaDatos\bin\Debug\netstandard2.0\CapaEntidad.dll
+C:\Users\Chantal Morales\Documents\4to\Técnicas de Análisis\proyecto\OrdenesCE\CapaDatos\obj\Debug\netstandard2.0\CapaDatos.csprojAssemblyReference.cache
+C:\Users\Chantal Morales\Documents\4to\Técnicas de Análisis\proyecto\OrdenesCE\CapaDatos\obj\Debug\netstandard2.0\CapaDatos.AssemblyInfoInputs.cache
+C:\Users\Chantal Morales\Documents\4to\Técnicas de Análisis\proyecto\OrdenesCE\CapaDatos\obj\Debug\netstandard2.0\CapaDatos.AssemblyInfo.cs
