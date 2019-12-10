@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrdenesTrabajoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="id_cliente" />
+    </Key>
+    <Property Name="id_cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ci" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_client__2F10007B" FromRole="Cliente" ToRole="Orden" />
+  </EntityType>
+  <EntityType Name="Equipo">
+    <Key>
+      <PropertyRef Name="id_equipo" />
+    </Key>
+    <Property Name="id_equipo" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="modelo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="serie_equipo" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="discoduro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="estadoHDD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="serialRAM1" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="serialRAM2" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="serialCargador" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="serialBateria" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="estadoequipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="id_orden_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK__Equipo__id_orden__30F848ED" FromRole="Equipo" ToRole="Orden" />
+  </EntityType>
+  <EntityType Name="Estado_Orden">
+    <Key>
+      <PropertyRef Name="id_estado" />
+    </Key>
+    <Property Name="id_estado" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="estado_orden1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="prioridad" Type="Decimal" Precision="10" Scale="0" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_estado__300424B4" FromRole="Estado_Orden" ToRole="Orden" />
+  </EntityType>
+  <EntityType Name="Orden">
+    <Key>
+      <PropertyRef Name="id_orden" />
+    </Key>
+    <Property Name="id_orden" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha_ingreso" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="observacionesrecibido" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="diagnostico" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fecha_salida" Type="DateTime" Precision="0" />
+    <Property Name="observacionesfinal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="id_usuario_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="id_cliente_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="id_estado_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__Orden__id_client__2F10007B" FromRole="Orden" ToRole="Cliente" />
+    <NavigationProperty Name="Equipo" Relationship="Self.FK__Equipo__id_orden__30F848ED" FromRole="Orden" ToRole="Equipo" />
+    <NavigationProperty Name="Estado_Orden" Relationship="Self.FK__Orden__id_estado__300424B4" FromRole="Orden" ToRole="Estado_Orden" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Orden__id_usuari__2E1BDC42" FromRole="Orden" ToRole="Usuario" />
+    <NavigationProperty Name="Orden_Seguimiento" Relationship="Self.FK__Orden_Seg__id_or__31EC6D26" FromRole="Orden" ToRole="Orden_Seguimiento" />
+  </EntityType>
+  <EntityType Name="Orden_Seguimiento">
+    <Key>
+      <PropertyRef Name="id_seguimiento" />
+    </Key>
+    <Property Name="id_seguimiento" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="fecharevision" Type="DateTime" Precision="0" />
+    <Property Name="id_orden_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="id_usuario_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK__Orden_Seg__id_or__31EC6D26" FromRole="Orden_Seguimiento" ToRole="Orden" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Orden_Seg__id_us__32E0915F" FromRole="Orden_Seguimiento" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="contrasena" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="rol" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_usuari__2E1BDC42" FromRole="Usuario" ToRole="Orden" />
+    <NavigationProperty Name="Orden_Seguimiento" Relationship="Self.FK__Orden_Seg__id_us__32E0915F" FromRole="Usuario" ToRole="Orden_Seguimiento" />
+  </EntityType>
+  <Association Name="FK__Orden__id_client__2F10007B">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="id_cliente" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="id_cliente_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Equipo__id_orden__30F848ED">
+    <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="id_orden_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orden__id_estado__300424B4">
+    <End Role="Estado_Orden" Type="Self.Estado_Orden" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado_Orden">
+        <PropertyRef Name="id_estado" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="id_estado_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orden__id_usuari__2E1BDC42">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="id_usuario_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orden_Seg__id_or__31EC6D26">
+    <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+    <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="id_orden" />
+      </Principal>
+      <Dependent Role="Orden_Seguimiento">
+        <PropertyRef Name="id_orden_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orden_Seg__id_us__32E0915F">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id_usuario" />
+      </Principal>
+      <Dependent Role="Orden_Seguimiento">
+        <PropertyRef Name="id_usuario_FK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OrdenesTrabajoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Equipo" EntityType="Self.Equipo" />
+    <EntitySet Name="Estado_Orden" EntityType="Self.Estado_Orden" />
+    <EntitySet Name="Orden" EntityType="Self.Orden" />
+    <EntitySet Name="Orden_Seguimiento" EntityType="Self.Orden_Seguimiento" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK__Orden__id_client__2F10007B" Association="Self.FK__Orden__id_client__2F10007B">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Equipo__id_orden__30F848ED" Association="Self.FK__Equipo__id_orden__30F848ED">
+      <End Role="Orden" EntitySet="Orden" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orden__id_estado__300424B4" Association="Self.FK__Orden__id_estado__300424B4">
+      <End Role="Estado_Orden" EntitySet="Estado_Orden" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orden__id_usuari__2E1BDC42" Association="Self.FK__Orden__id_usuari__2E1BDC42">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orden_Seg__id_or__31EC6D26" Association="Self.FK__Orden_Seg__id_or__31EC6D26">
+      <End Role="Orden" EntitySet="Orden" />
+      <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orden_Seg__id_us__32E0915F" Association="Self.FK__Orden_Seg__id_us__32E0915F">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

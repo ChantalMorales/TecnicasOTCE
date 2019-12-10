@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OrdenesTrabajoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ci" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="id_equipo" />
+          </Key>
+          <Property Name="id_equipo" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="modelo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="serie_equipo" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="discoduro" Type="varchar" MaxLength="30" />
+          <Property Name="estadoHDD" Type="varchar" MaxLength="20" />
+          <Property Name="serialRAM1" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="serialRAM2" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="serialCargador" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="serialBateria" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="observaciones" Type="varchar" MaxLength="200" />
+          <Property Name="estadoequipo" Type="varchar" MaxLength="20" />
+          <Property Name="id_orden_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado_Orden">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado_orden" Type="varchar" MaxLength="200" />
+          <Property Name="prioridad" Type="numeric" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="id_orden" />
+          </Key>
+          <Property Name="id_orden" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_ingreso" Type="date" Nullable="false" />
+          <Property Name="observacionesrecibido" Type="varchar" MaxLength="200" />
+          <Property Name="diagnostico" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="fecha_salida" Type="date" />
+          <Property Name="observacionesfinal" Type="varchar" MaxLength="200" />
+          <Property Name="id_usuario_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_cliente_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_estado_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orden_Seguimiento">
+          <Key>
+            <PropertyRef Name="id_seguimiento" />
+          </Key>
+          <Property Name="id_seguimiento" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="fecharevision" Type="date" />
+          <Property Name="id_orden_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_usuario_FK" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="numeric" Precision="10" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="rol" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Equipo__id_orden__30F848ED">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="id_orden" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="id_orden_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__id_client__2F10007B">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_cliente_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__id_estado__300424B4">
+          <End Role="Estado_Orden" Type="Self.Estado_Orden" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Orden">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_estado_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__id_usuari__2E1BDC42">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_usuario_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden_Seg__id_or__31EC6D26">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="id_orden" />
+            </Principal>
+            <Dependent Role="Orden_Seguimiento">
+              <PropertyRef Name="id_orden_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden_Seg__id_us__32E0915F">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Orden_Seguimiento">
+              <PropertyRef Name="id_usuario_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OrdenesTrabajoModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado_Orden" EntityType="Self.Estado_Orden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orden_Seguimiento" EntityType="Self.Orden_Seguimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Equipo__id_orden__30F848ED" Association="Self.FK__Equipo__id_orden__30F848ED">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__id_client__2F10007B" Association="Self.FK__Orden__id_client__2F10007B">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__id_estado__300424B4" Association="Self.FK__Orden__id_estado__300424B4">
+            <End Role="Estado_Orden" EntitySet="Estado_Orden" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__id_usuari__2E1BDC42" Association="Self.FK__Orden__id_usuari__2E1BDC42">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden_Seg__id_or__31EC6D26" Association="Self.FK__Orden_Seg__id_or__31EC6D26">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden_Seg__id_us__32E0915F" Association="Self.FK__Orden_Seg__id_us__32E0915F">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OrdenesTrabajoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ci" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_client__2F10007B" FromRole="Cliente" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Equipo">
+          <Key>
+            <PropertyRef Name="id_equipo" />
+          </Key>
+          <Property Name="id_equipo" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modelo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="serie_equipo" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="discoduro" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="estadoHDD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="serialRAM1" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="serialRAM2" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="serialCargador" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="serialBateria" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estadoequipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="id_orden_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK__Equipo__id_orden__30F848ED" FromRole="Equipo" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Estado_Orden">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado_orden1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="prioridad" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_estado__300424B4" FromRole="Estado_Orden" ToRole="Orden" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="id_orden" />
+          </Key>
+          <Property Name="id_orden" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_ingreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="observacionesrecibido" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="diagnostico" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_salida" Type="DateTime" Precision="0" />
+          <Property Name="observacionesfinal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="id_usuario_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_cliente_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_estado_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Orden__id_client__2F10007B" FromRole="Orden" ToRole="Cliente" />
+          <NavigationProperty Name="Equipo" Relationship="Self.FK__Equipo__id_orden__30F848ED" FromRole="Orden" ToRole="Equipo" />
+          <NavigationProperty Name="Estado_Orden" Relationship="Self.FK__Orden__id_estado__300424B4" FromRole="Orden" ToRole="Estado_Orden" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Orden__id_usuari__2E1BDC42" FromRole="Orden" ToRole="Usuario" />
+          <NavigationProperty Name="Orden_Seguimiento" Relationship="Self.FK__Orden_Seg__id_or__31EC6D26" FromRole="Orden" ToRole="Orden_Seguimiento" />
+        </EntityType>
+        <EntityType Name="Orden_Seguimiento">
+          <Key>
+            <PropertyRef Name="id_seguimiento" />
+          </Key>
+          <Property Name="id_seguimiento" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fecharevision" Type="DateTime" Precision="0" />
+          <Property Name="id_orden_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="id_usuario_FK" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK__Orden_Seg__id_or__31EC6D26" FromRole="Orden_Seguimiento" ToRole="Orden" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Orden_Seg__id_us__32E0915F" FromRole="Orden_Seguimiento" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Decimal" Precision="10" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasena" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rol" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Orden" Relationship="Self.FK__Orden__id_usuari__2E1BDC42" FromRole="Usuario" ToRole="Orden" />
+          <NavigationProperty Name="Orden_Seguimiento" Relationship="Self.FK__Orden_Seg__id_us__32E0915F" FromRole="Usuario" ToRole="Orden_Seguimiento" />
+        </EntityType>
+        <Association Name="FK__Orden__id_client__2F10007B">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_cliente_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equipo__id_orden__30F848ED">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="id_orden" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="id_orden_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__id_estado__300424B4">
+          <End Role="Estado_Orden" Type="Self.Estado_Orden" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado_Orden">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_estado_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden__id_usuari__2E1BDC42">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="id_usuario_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden_Seg__id_or__31EC6D26">
+          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+          <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orden">
+              <PropertyRef Name="id_orden" />
+            </Principal>
+            <Dependent Role="Orden_Seguimiento">
+              <PropertyRef Name="id_orden_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orden_Seg__id_us__32E0915F">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Orden_Seguimiento" Type="Self.Orden_Seguimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Orden_Seguimiento">
+              <PropertyRef Name="id_usuario_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OrdenesTrabajoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Equipo" EntityType="Self.Equipo" />
+          <EntitySet Name="Estado_Orden" EntityType="Self.Estado_Orden" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" />
+          <EntitySet Name="Orden_Seguimiento" EntityType="Self.Orden_Seguimiento" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Orden__id_client__2F10007B" Association="Self.FK__Orden__id_client__2F10007B">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equipo__id_orden__30F848ED" Association="Self.FK__Equipo__id_orden__30F848ED">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__id_estado__300424B4" Association="Self.FK__Orden__id_estado__300424B4">
+            <End Role="Estado_Orden" EntitySet="Estado_Orden" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden__id_usuari__2E1BDC42" Association="Self.FK__Orden__id_usuari__2E1BDC42">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden_Seg__id_or__31EC6D26" Association="Self.FK__Orden_Seg__id_or__31EC6D26">
+            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orden_Seg__id_us__32E0915F" Association="Self.FK__Orden_Seg__id_us__32E0915F">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Orden_Seguimiento" EntitySet="Orden_Seguimiento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OrdenesTrabajoModelStoreContainer" CdmEntityContainer="OrdenesTrabajoEntities">
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="ci" ColumnName="ci" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipo">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Equipo">
+              <MappingFragment StoreEntitySet="Equipo">
+                <ScalarProperty Name="id_equipo" ColumnName="id_equipo" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="serie_equipo" ColumnName="serie_equipo" />
+                <ScalarProperty Name="discoduro" ColumnName="discoduro" />
+                <ScalarProperty Name="estadoHDD" ColumnName="estadoHDD" />
+                <ScalarProperty Name="serialRAM1" ColumnName="serialRAM1" />
+                <ScalarProperty Name="serialRAM2" ColumnName="serialRAM2" />
+                <ScalarProperty Name="serialCargador" ColumnName="serialCargador" />
+                <ScalarProperty Name="serialBateria" ColumnName="serialBateria" />
+                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+                <ScalarProperty Name="estadoequipo" ColumnName="estadoequipo" />
+                <ScalarProperty Name="id_orden_FK" ColumnName="id_orden_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado_Orden">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Estado_Orden">
+              <MappingFragment StoreEntitySet="Estado_Orden">
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="estado_orden1" ColumnName="estado_orden" />
+                <ScalarProperty Name="prioridad" ColumnName="prioridad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orden">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Orden">
+              <MappingFragment StoreEntitySet="Orden">
+                <ScalarProperty Name="id_orden" ColumnName="id_orden" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+                <ScalarProperty Name="observacionesrecibido" ColumnName="observacionesrecibido" />
+                <ScalarProperty Name="diagnostico" ColumnName="diagnostico" />
+                <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+                <ScalarProperty Name="observacionesfinal" ColumnName="observacionesfinal" />
+                <ScalarProperty Name="id_usuario_FK" ColumnName="id_usuario_FK" />
+                <ScalarProperty Name="id_cliente_FK" ColumnName="id_cliente_FK" />
+                <ScalarProperty Name="id_estado_FK" ColumnName="id_estado_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orden_Seguimiento">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Orden_Seguimiento">
+              <MappingFragment StoreEntitySet="Orden_Seguimiento">
+                <ScalarProperty Name="id_seguimiento" ColumnName="id_seguimiento" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecharevision" ColumnName="fecharevision" />
+                <ScalarProperty Name="id_orden_FK" ColumnName="id_orden_FK" />
+                <ScalarProperty Name="id_usuario_FK" ColumnName="id_usuario_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="OrdenesTrabajoModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

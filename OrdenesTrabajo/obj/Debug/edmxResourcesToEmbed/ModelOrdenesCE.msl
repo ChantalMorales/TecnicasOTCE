@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OrdenesTrabajoModelStoreContainer" CdmEntityContainer="OrdenesTrabajoEntities">
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="ci" ColumnName="ci" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipo">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Equipo">
+        <MappingFragment StoreEntitySet="Equipo">
+          <ScalarProperty Name="id_equipo" ColumnName="id_equipo" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="modelo" ColumnName="modelo" />
+          <ScalarProperty Name="serie_equipo" ColumnName="serie_equipo" />
+          <ScalarProperty Name="discoduro" ColumnName="discoduro" />
+          <ScalarProperty Name="estadoHDD" ColumnName="estadoHDD" />
+          <ScalarProperty Name="serialRAM1" ColumnName="serialRAM1" />
+          <ScalarProperty Name="serialRAM2" ColumnName="serialRAM2" />
+          <ScalarProperty Name="serialCargador" ColumnName="serialCargador" />
+          <ScalarProperty Name="serialBateria" ColumnName="serialBateria" />
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="estadoequipo" ColumnName="estadoequipo" />
+          <ScalarProperty Name="id_orden_FK" ColumnName="id_orden_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado_Orden">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Estado_Orden">
+        <MappingFragment StoreEntitySet="Estado_Orden">
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="estado_orden1" ColumnName="estado_orden" />
+          <ScalarProperty Name="prioridad" ColumnName="prioridad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orden">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Orden">
+        <MappingFragment StoreEntitySet="Orden">
+          <ScalarProperty Name="id_orden" ColumnName="id_orden" />
+          <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+          <ScalarProperty Name="observacionesrecibido" ColumnName="observacionesrecibido" />
+          <ScalarProperty Name="diagnostico" ColumnName="diagnostico" />
+          <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+          <ScalarProperty Name="observacionesfinal" ColumnName="observacionesfinal" />
+          <ScalarProperty Name="id_usuario_FK" ColumnName="id_usuario_FK" />
+          <ScalarProperty Name="id_cliente_FK" ColumnName="id_cliente_FK" />
+          <ScalarProperty Name="id_estado_FK" ColumnName="id_estado_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orden_Seguimiento">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Orden_Seguimiento">
+        <MappingFragment StoreEntitySet="Orden_Seguimiento">
+          <ScalarProperty Name="id_seguimiento" ColumnName="id_seguimiento" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="fecharevision" ColumnName="fecharevision" />
+          <ScalarProperty Name="id_orden_FK" ColumnName="id_orden_FK" />
+          <ScalarProperty Name="id_usuario_FK" ColumnName="id_usuario_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="OrdenesTrabajoModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+          <ScalarProperty Name="rol" ColumnName="rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
